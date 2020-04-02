@@ -1,14 +1,16 @@
 const express = require('express');
-const app     = express();
-const cors    = require('cors');
-const PORT    = process.env.PORT || 3000;
+const app = express();
+const cors = require('cors');
+const PORT = process.env.PORT || 3000;
+const router = require('./routes')
 
 // middlewares
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // routers
-app.use('/voices', require('./routes/voice'))
+app.use('/', router)
 
 // start
-app.listen(PORT, () => {console.log(`Server start on port: ${PORT}`);});
+app.listen(PORT, () => { console.log(`Server start on port: ${PORT}`); });
