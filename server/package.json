@@ -1,7 +1,6 @@
 {
   "name": "api-language-learning",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +11,10 @@
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "query-string": "^6.11.1"
-  }
+    "query-string": "^6.11.1",
+    "ibm-watson": "^5.4.0",
+    "speaker": "^0.5.1"
+  },
+  "devDependencies": {},
+  "description": ""
 }
