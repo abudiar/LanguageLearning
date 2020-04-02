@@ -1,0 +1,230 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- StyleSheets -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/datepicker.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css"
+        integrity="sha256-xykLhwtLN4WyS7cpam2yiUOwr709tvF3N/r7+gOMxJw=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/1f9cbf7c3d.js" crossorigin="anonymous"></script>
+    <script src="js/datepicker.min.js"></script>
+
+    <!-- Google -->
+    <meta name="google-signin-client_id"
+        content="142472030354-i6m882420v7cbjtg5ekl08vkm749anap.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="profile email">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/client.js?onload=onLoadCallback"></script>
+
+
+    <title>Meh Fancy Ya?</title>
+</head>
+
+
+
+<body>
+    <div class="card bg-light">
+        <!-- UserPage -->
+        <div id="UserPage" style="display: none">
+            <!-- Login and Register Buttons -->
+            <div class="container-switch">
+                <div class="switch-back switch-button"></div>
+                <div class="switch-button">
+                    <span class="active"></span>
+                    <button class="switch-button-case left active-case">
+                        Login
+                    </button>
+                    <button class="switch-button-case right not-active">
+                        Register
+                    </button>
+                </div>
+            </div>
+            <!-- Login Body -->
+            <div class="card-body login transition visible">
+                <form class="form-login">
+                    <div class="form-label-group">
+                        <input type="email" name="loginEmail" id="loginEmail" class="form-control"
+                            placeholder="Email address" required autofocus>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="password" name="loginPassword" id="loginPassword" class="form-control"
+                            placeholder="Password" required>
+                    </div>
+                    <button id="login" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
+                        in</button>
+                </form>
+                <hr class="my-4">
+                <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
+                        class="fab fa-google mr-2"></i> Sign in with Google</button>
+                <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
+                        class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</!-->
+            </div>
+            <!-- Register Body -->
+            <div class="card-body register transition hidden">
+                <form class="form-register">
+                    <div class="form-label-group">
+                        <input type="string" name="registerName" id="registerName" class="form-control"
+                            placeholder="Name" required autofocus>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="email" name="registerEmail" id="registerEmail" class="form-control"
+                            placeholder="Email address" required>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="password" name="registerPassword" id="registerPassword" class="form-control"
+                            placeholder="Password" required>
+                    </div>
+                    <button id="register" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
+                        Up</button>
+                </form>
+                <hr class="my-4">
+                <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
+                        class="fab fa-google mr-2"></i> Sign up with Google</button>
+                <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
+                        class="fab fa-facebook-f mr-2"></i> Sign up with Facebook</button> -->
+            </div>
+        </div>
+        <!-- ListPage -->
+        <div id="ListPage" style="display: none;">
+            <nav class="navbar navbar-dark bg-dark justify-content-between" style="padding:30px">
+                <h5 class="logout transition btn-icon"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
+                <h1 style="color:transparent;cursor:default;">List</h1>
+                <h5 style="color:transparent;cursor:default;"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                </h5>
+            </nav>
+            <table class="card-body" style="width:100%">
+                <tr>
+                    <th>
+                        <div class="title">
+                            <h1 id="TitleUser"></h1>
+                            <h6 id="SubUser"></h6>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="add-todo title">
+                            <button id="AddTodo" class="btn btn-lg btn-primary btn-block text-uppercase"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+
+            <ul class="list-group todo-list" style="overflow: hidden; border-radius: 5px;">
+            </ul>
+        </div>
+        <!-- NewPage -->
+        <div id="NewPage" style="display: none">
+            <nav class="navbar navbar-dark bg-dark justify-content-between" style="padding:30px">
+                <h5 class="back transition btn-icon"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</h5>
+                <h1>New Todo</h1>
+                <h5 style="color:transparent;cursor:default;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </h5>
+            </nav>
+            <div class="card-body new-todo transition visible">
+                <form class="form-new-todo">
+                    <div class="form-label-group">
+                        <input type="string" name="newTitle" id="newTitle" class="form-control" placeholder="Title"
+                            required autofocus>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="string" name="newDescription" id="newDescription" class="form-control"
+                            placeholder="Description" autofocus>
+                    </div>
+                    <div class="form-label-group">
+                        <input data-toggle="datepicker" id="newDate" class="form-control" placeholder="Due Date"
+                            autofocus>
+                    </div>
+                    <button id="new-todo" class="btn btn-lg btn-primary btn-block text-uppercase"
+                        type="submit">Create</button>
+                </form>
+            </div>
+        </div>
+        <!-- SettingsPage -->
+        <div id="SettingsPage" style="display: none">
+            <nav class="navbar navbar-dark bg-dark justify-content-between" style="padding:30px">
+                <h5 class="back transition btn-icon"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</h5>
+                <h1>Edit Todo</h1>
+                <h5 style="color:transparent;cursor:default;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </h5>
+            </nav>
+            <div class="card-body edit-todo transition visible">
+                <form class="form-edit-todo">
+                    <div class="form-label-group">
+                        <input type="string" name="editTitle" id="editTitle" class="form-control" placeholder="Title"
+                            required autofocus>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="string" name="editDescription" id="editDescription" class="form-control"
+                            placeholder="Description" autofocus>
+                    </div>
+                    <div class="form-label-group">
+                        <input data-toggle="datepicker" name="editDate" id="editDate" class="form-control"
+                            placeholder="Due Date" autofocus>
+                    </div>
+                    <button id="edit-todo" class="btn btn-lg btn-primary btn-block text-uppercase"
+                        type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+        <!-- LanguangePage -->
+        <div id="LanguangePage">
+            <nav class="navbar navbar-dark justify-content-between">
+                <h5 class="back transition btn-icon"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</h5>
+                <div>
+                    <h1>Learn</h1>
+                    <h5>English</h5>
+                </div>
+                <h5 style="color:transparent;cursor:default;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </h5>
+            </nav>
+            <div class="card-body translate-todo transition visible">
+                <p id="translatedTitle" style="color:black;">Start typing to learn</p>
+                <div class="textarea inner-shadow">
+                    <textarea type="text" id="translateTitle" class="autofit" style="overflow-y: hidden;"></textarea>
+                </div>
+            </div>
+            <audio controls id="audio">
+                <source src="http://localhost:3000/nama.wav" type="audio/wav" </audio>
+        </div>
+        <!-- AlreadySocialsPage -->
+        <div id="AlreadySocialsPage" style="display: none">
+            <nav class="navbar navbar-dark bg-dark justify-content-between" style="padding:30px">
+                <h5 class="back transition btn-icon"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</h5>
+                <h1>Sign In</h1>
+                <h5 style="color:transparent;cursor:default;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </h5>
+            </nav>
+            <div class="card-body socials transition visible">
+                <p>Email already exists with one of these socials!</p>
+                <p>Please login to set your password!</p>
+                <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
+                        class="fab fa-google mr-2"></i> Sign in with Google</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
+        integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
+    <script src="helpers/langcodes.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+
+</html>
