@@ -4,6 +4,7 @@ let curVal = '';
 const loadingUpdates = [0, 0];
 let audio;
 let id_token;
+let isSignedIn = false;
 $(document).ready(function () {
   setInterval(updateTranslation, 500);
   // localStorage.setItem('targetLang', 'ja');
@@ -377,78 +378,81 @@ function play(filePath) {
 function showListPage() {
   showUserPage(); // Make sure to clear user page
   $('#TitleUser').html(`Hey ${localStorage.getItem('name')}, `);
-  // getClasses((data) => {
-  //   $('#SubUser').text(`You've started learning ${data.length} languages!`);
-  //   $('.list-group.class-list').html('');
-  //   const subscribedList = {
-  //     itemIds: [],
-  //     langIds: []
-  //   };
-  //   for (let i in data) {
-  //     const newItem = `<li class="list-group-item">
-  //               <table class=" trash transition" style="color: white;position:relative; z-index:5;">
-  //                   <tr>
-  //                       <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-  //                           <h5 class="class-title checked"style="margin:0;">${langCodes[data[i]['idLang']]}</h5>
-  //                           <p class="description transition checked" >You've spent ${Math.floor(Math.random() * 100)} minutes today! Good Job!</p>
-  //                       </th>
-  //                   </tr>
-  //               </table>
-  //               <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
-  //                   <h5 style="margin:0;" class="fa fa-trash button transition btn-icon idSPLIT${data[i]['id']}SPLIT" aria-hidden="true"></h5>
-  //               </nav>
-  //           </li>`
-  //     subscribedList['langIds'].push(data[i]['idLang']);
-  //     subscribedList['itemIds'].push(data[i]['id']);
-  //     $('.list-group.subscribed-list').append(newItem);
-  //   }
-  //   for (let key in langCodes) {
-  //     if (!subscribedList['langIds'].includes(key)) {
-  //       const newItem = `<li class="list-group-item">
-  //               <table class=" trash transition" style="color: white;position:relative; z-index:5;">
-  //                   <tr>
-  //                       <th class="button check btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-  //                           <h5 class="class-title checked"style="margin:0;">${langCodes[key]}</h5>
-  //                           <p class="description transition checked" ></p>
-  //                       </th>
-  //                   </tr>
-  //               </table>
-  //               <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
-  //                   <h5 style="margin:0;" class="fa fa-check button transition btn-icon langIdSPLIT${key}">SPLIT" aria-hidden="true"></h5>
-  //               </nav>
-  //           </li>`
-  //       $('.list-group.class-list').append(newItem);
-  //     }
-  //   }
-  //   $('.list-group-item').hover(function (e) {
-  //     $('.trash').removeClass("selected");
-  //     $('.description').removeClass("selected");
-  //     $(this).find('.trash').addClass("selected");
-  //     if ($(this).find('.description').text().length > 0) {
-  //       $(this).find('.description').addClass("selected");
-  //     }
-  //   });
-  //   $('.list-group-item').mouseleave(function (e) {
-  //     $('.trash').removeClass("selected");
-  //     $('.description').removeClass("selected");
-  //   });
-  //   $('.button').click(function (e) {
-  //     e.stopPropagation();
-  //     const id = $(this).attr('class').split('SPLIT')[1];
-  //     if ($(this).attr('class').includes('fa-trash')) {
-  //       deleteClass(id, () => {
-  //         showListPage();
-  //       });
-  //     }
-  //     else if ($(this).attr('class').includes('check')) {
-  //       if (!subscribedList['itemIds'].includes(id)) {
-  //         addClass(id, function (e) {
-  //           showListPage();
-  //         })
-  //       }
-  //     }
-  //   });
-  // })
+  getClasses((data) => {
+    $('#SubUser').text(`You've started learning ${data.length} languages!`);
+    $('.list-group.subscribed-list').html('');
+    $('.list-group.class-list').html('');
+    const subscribedList = {
+      itemIds: [],
+      langIds: []
+    };
+    console.log(data)
+    for (let i in data) {
+      console.log(data[i])
+      const newItem = `<li class="list-group-item">
+                <table class=" trash transition" style="color: white;position:relative; z-index:5;">
+                    <tr>
+                        <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
+                            <h5 class="class-title checked"style="margin:0;">${langCodes[data[i]['idLang']]}</h5>
+                            <p class="description transition checked" >You've spent ${Math.floor(Math.random() * 100)} minutes today! Good Job!</p>
+                        </th>
+                    </tr>
+                </table>
+                <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
+                    <h5 style="margin:0;" class="fa fa-trash button transition btn-icon idSPLIT${data[i]['id']}SPLIT" aria-hidden="true"></h5>
+                </nav>
+            </li>`
+      subscribedList['langIds'].push(data[i]['idLang']);
+      subscribedList['itemIds'].push(data[i]['id']);
+      $('.list-group.subscribed-list').append(newItem);
+    }
+    for (let key in langCodes) {
+      if (!subscribedList['langIds'].includes(key)) {
+        const newItem = `<li class="list-group-item">
+                <table class=" trash transition" style="color: white;position:relative; z-index:5;">
+                    <tr>
+                        <th class="button check btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
+                            <h5 class="class-title checked"style="margin:0;">${langCodes[key]}</h5>
+                            <p class="description transition checked" ></p>
+                        </th>
+                    </tr>
+                </table>
+                <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
+                    <h5 style="margin:0;" class="fa fa-check button transition btn-icon langIdSPLIT${key}">SPLIT" aria-hidden="true"></h5>
+                </nav>
+            </li>`
+        $('.list-group.class-list').append(newItem);
+      }
+    }
+    $('.list-group-item').hover(function (e) {
+      $('.trash').removeClass("selected");
+      $('.description').removeClass("selected");
+      $(this).find('.trash').addClass("selected");
+      if ($(this).find('.description').text().length > 0) {
+        $(this).find('.description').addClass("selected");
+      }
+    });
+    $('.list-group-item').mouseleave(function (e) {
+      $('.trash').removeClass("selected");
+      $('.description').removeClass("selected");
+    });
+    $('.button').click(function (e) {
+      e.stopPropagation();
+      const id = $(this).attr('class').split('SPLIT')[1];
+      if ($(this).attr('class').includes('fa-trash')) {
+        deleteClass(id, () => {
+          showListPage();
+        });
+      }
+      else if ($(this).attr('class').includes('check')) {
+        if (!subscribedList['itemIds'].includes(id)) {
+          addClass(id, function (e) {
+            showListPage();
+          })
+        }
+      }
+    });
+  })
   hideAll();
   $('#ListPage').show();
 }
@@ -488,7 +492,7 @@ function getClasses(cb) {
     })
 }
 
-function addClasses(data, cb) {
+function addClass(data, cb) {
   $.ajax({
     method: 'POST',
     url: 'http://localhost:3000/classes',
@@ -507,7 +511,7 @@ function addClasses(data, cb) {
     })
 }
 
-function deleteClasses(id, cb) {
+function deleteClass(id, cb) {
   $.ajax({
     method: 'DELETE',
     url: `http://localhost:3000/classes/${id}`,
@@ -549,7 +553,7 @@ function voice(message = null) {
     data: data
   })
     .then(result => {
-      if (('#UserPage:visible').length > 0) {
+      if (('#UserPage:visible').length > 0 && !isSignedIn) {
         $('#loginBtn').html('Login');
         showListPage();
         $('#registerBtn').html('Register');
@@ -576,7 +580,10 @@ function onSignIn(googleUser) {
       // console.log(result, 'result nih')
       // token = localStorage.accessToken;
       localStorage.setItem('name', user.name);
-      voice(`Welcome, ${user.name}... Enjoy using our site`);
+      if (!isSignedIn) {
+        isSignedIn = true;
+        voice(`Welcome, ${user.name}... Enjoy using our site`);
+      }
     })
     .fail(err => {
       let errors = ['Email has registered']
@@ -596,5 +603,6 @@ function signOut() {
   voice(`Goodbye ${name}, thanks for using our site!`);
   localStorage.removeItem('accessToken');
   localStorage.removeItem('name');
+  isSignedIn = false;
 }
 
