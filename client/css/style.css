@@ -146,14 +146,14 @@ ul li {
   color: whitesmoke;
 }
 
-/* .add-todo.title {
+/* .add-class.title {
   position: relative;
   width: 50px;
   height: 50px;
   padding-bottom: 20%;
 } */
 
-#AddTodo {
+#AddClass {
   padding: 20px 0;
   border-radius: 48px;
   height: 60px;
@@ -308,7 +308,7 @@ input[type="checkbox"]:checked::before {
   opacity: 1;
 }
 
-input[type="checkbox"]:checked~.todo-title::before {
+input[type="checkbox"]:checked~.class-title::before {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
@@ -363,6 +363,9 @@ input[type="checkbox"]:checked~.todo-title::before {
 .navbar {
   padding: 12px 30px;
   border: 0;
+}
+
+.colorful {
   background: rgb(238, 174, 202);
   background: linear-gradient( 49deg, rgb(236, 174, 238) 0%, rgb(148, 216, 233) 100%);
 }
@@ -442,6 +445,7 @@ textarea:focus {
 
 #pageSettings.close {
   max-height: 0;
+  cursor: pointer;
 }
 
 /*Styling Selectbox*/

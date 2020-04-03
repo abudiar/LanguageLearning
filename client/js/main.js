@@ -174,7 +174,7 @@ $(document).ready(function (e) {
     //         register(data);
     //     })
 
-    //     $('.form-translate-todo').submit(function (e) {
+    //     $('.form-translate-class').submit(function (e) {
     //         e.preventDefault();
     //         e.stopPropagation();
 
@@ -184,14 +184,14 @@ $(document).ready(function (e) {
     //             translateTo: $('#translateTo').val()
     //         }
 
-    //         translateTodo(id, data, (response) => {
+    //         translateClass(id, data, (response) => {
     //             console.log(response);
     //             $('#translatedTitle').text(response.translated.title)
     //             $('#translatedDesciption').text(response.translated.description)
     //         });
     //     })
 
-    //     $('.form-new-todo').submit(function (e) {
+    //     $('.form-new-class').submit(function (e) {
     //         e.preventDefault();
     //         e.stopPropagation();
     //         const data = {
@@ -202,12 +202,12 @@ $(document).ready(function (e) {
     //         }
     //         if ($('#newDate').val() == '')
     //             delete data['due_date'];
-    //         addTodo(data, () => {
+    //         addClass(data, () => {
     //             showListPage();
     //         });
     //     })
 
-    //     $('.form-edit-todo').submit(function (e) {
+    //     $('.form-edit-class').submit(function (e) {
     //         e.preventDefault();
     //         e.stopPropagation();
     //         const id = $(this).attr('class').split('SPLIT')[1];
@@ -229,12 +229,12 @@ $(document).ready(function (e) {
     //         }
     //         if ($('#editDate').val() == '')
     //             delete data['due_date'];
-    //         updateTodo(id, data, () => {
+    //         updateClass(id, data, () => {
     //             showListPage();
     //         });
     //     })
 
-    //     $('#AddTodo').click(function () {
+    //     $('#AddClass').click(function () {
     //         showNewPage();
     //     })
 
@@ -270,13 +270,13 @@ $(document).ready(function (e) {
 // }
 
 // function showTranslatePage(data) {
-//     const classArr = $('.form-translate-todo').attr('class').split(' ');
+//     const classArr = $('.form-translate-class').attr('class').split(' ');
 //     for (let i in classArr) {
 //         if (classArr[i].includes('SPLIT'))
 //             delete classArr[i];
 //     }
 //     const classWithoutId = classArr.join(' ');
-//     $('.form-translate-todo').removeClass().addClass(classWithoutId);
+//     $('.form-translate-class').removeClass().addClass(classWithoutId);
 
 //     console.log($('#translateFrom').html().length)
 //     if ($('#translateFrom').html().length < 50 || $('#translateTo').html().length < 50) {
@@ -298,7 +298,7 @@ $(document).ready(function (e) {
 //     $('#translateDesciption').text(data.description)
 //     $('#translatedDesciption').text(data.description)
 
-//     $('.form-translate-todo').addClass(`idSPLIT${data['id']}SPLIT`);
+//     $('.form-translate-class').addClass(`idSPLIT${data['id']}SPLIT`);
 //     hideAll();
 //     $('#TranslatePage').show();
 // }
@@ -310,7 +310,7 @@ $(document).ready(function (e) {
 
 // function showEditPage(data) {
 //     // // console.log(data['title'])
-//     $('.form-edit-todo').addClass(`idSPLIT${data['id']}SPLIT`);
+//     $('.form-edit-class').addClass(`idSPLIT${data['id']}SPLIT`);
 //     $('#editTitle').val(`${data['title']}`);
 //     $('#editDescription').val(`${data['description'] ? data['description'] : ''}`);
 //     if (data['due_date'] == null) {
@@ -343,9 +343,9 @@ $(document).ready(function (e) {
 //     $('#newDescription').val(null);
 //     $('#newDate').val(null);
 //     $('#TitleUser').html(`Hey ${localStorage.getItem('name')}, `);
-//     getTodos((data) => {
-//         $('#SubUser').text(`You have ${data.length} things todo!`);
-//         $('.list-group.todo-list').html('');
+//     getClasss((data) => {
+//         $('#SubUser').text(`You have ${data.length} things class!`);
+//         $('.list-group.class-list').html('');
 //         for (let i in data) {
 //             const newItem = `<li class="list-group-item">
 //                 <table class=" trash transition" style="color: white;position:relative; z-index:5;">
@@ -354,7 +354,7 @@ $(document).ready(function (e) {
 //                             <input type="checkbox" class="form-check-input btn-icon button status idSPLIT${data[i]['id']}SPLIT" style="margin:auto;position:relative;" ${data[i]['status']}>
 //                         </th>
 //                         <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-//                             <h5 class="todo-title ${data[i]['status'] == 'checked' ? 'greyed-out' : ''}"style="margin:0;">${data[i]['title']}</h5>
+//                             <h5 class="class-title ${data[i]['status'] == 'checked' ? 'greyed-out' : ''}"style="margin:0;">${data[i]['title']}</h5>
 //                             <p class="description transition ${data[i]['status'] == 'checked' ? 'checked' : ''}"" >${data[i]['description'] ? data[i]['description'] : ''}</p>
 //                         </th>
 //                         <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon ${data[i]['status'] == 'checked' ? 'greyed-out' : ''}" style="padding:20px 25px; z-index:5;">
@@ -368,7 +368,7 @@ $(document).ready(function (e) {
 //                     <h5 style="margin:0;" class="fa fa-trash button transition btn-icon idSPLIT${data[i]['id']}SPLIT" aria-hidden="true"></h5>
 //                 </nav>
 //             </li>`
-//             $('.list-group.todo-list').append(newItem);
+//             $('.list-group.class-list').append(newItem);
 //         }
 //         $('.list-group-item').hover(function (e) {
 //             $('.trash').removeClass("selected");
@@ -386,28 +386,28 @@ $(document).ready(function (e) {
 //             e.stopPropagation();
 //             const id = $(this).attr('class').split('SPLIT')[1];
 //             if ($(this).attr('class').includes('fa-language')) {
-//                 getSingleTodo(id, (data) => {
+//                 getSingleClass(id, (data) => {
 //                     showTranslatePage(data);
 //                 });
 //             }
 //             else if ($(this).attr('class').includes('fa-edit')) {
-//                 getSingleTodo(id, (data) => {
+//                 getSingleClass(id, (data) => {
 //                     showEditPage(data);
 //                 });
 //             }
 //             else if ($(this).attr('class').includes('fa-trash')) {
-//                 deleteTodo(id, () => {
+//                 deleteClass(id, () => {
 //                     showListPage();
 //                 });
 //             }
 //             else if ($(this).attr('class').includes('status')) {
 //                 $(this).is(":checked") ?
-//                     updateTodo(id, { status: 'checked' }, function (e) {
+//                     updateClass(id, { status: 'checked' }, function (e) {
 //                         showListPage();
 //                         // console.log(this)
 //                         $(this).click();
 //                     }) :
-//                     updateTodo(id, { status: null }, function (e) {
+//                     updateClass(id, { status: null }, function (e) {
 //                         showListPage();
 //                         $(this).click();
 //                     });
@@ -415,12 +415,12 @@ $(document).ready(function (e) {
 //             else if ($(this).attr('class').includes('check')) {
 //                 // console.log(id, $(this).parent().find('.status').is(":checked"))
 //                 $(this).parent().find('.status').is(":checked") ?
-//                     updateTodo(id, { status: null }, function (e) {
+//                     updateClass(id, { status: null }, function (e) {
 //                         showListPage();
 //                         // console.log(this)
 //                         $(this).click();
 //                     }) :
-//                     updateTodo(id, { status: 'checked' }, function (e) {
+//                     updateClass(id, { status: 'checked' }, function (e) {
 //                         showListPage();
 //                         $(this).click();
 //                     });
@@ -607,7 +607,7 @@ $(document).ready(function (e) {
 //     });
 // }
 
-// function getTodos(cb) {
+// function getClasss(cb) {
 //     $.ajax({
 //         method: 'GET',
 //         url: 'http://localhost:3000/todos',
@@ -623,7 +623,7 @@ $(document).ready(function (e) {
 //         })
 // }
 
-// function addTodo(data, cb) {
+// function addClass(data, cb) {
 //     $.ajax({
 //         method: 'POST',
 //         url: 'http://localhost:3000/todos',
@@ -641,7 +641,7 @@ $(document).ready(function (e) {
 //         })
 // }
 
-// function getSingleTodo(id, cb) {
+// function getSingleClass(id, cb) {
 //     $.ajax({
 //         method: 'GET',
 //         url: `http://localhost:3000/todos/${id}`,
@@ -658,7 +658,7 @@ $(document).ready(function (e) {
 //         })
 // }
 
-// function updateTodo(id, data, cb) {
+// function updateClass(id, data, cb) {
 //     $.ajax({
 //         method: 'PUT',
 //         url: `http://localhost:3000/todos/${id}`,
@@ -675,7 +675,7 @@ $(document).ready(function (e) {
 //         })
 // }
 
-// function deleteTodo(id, cb) {
+// function deleteClass(id, cb) {
 //     $.ajax({
 //         method: 'DELETE',
 //         url: `http://localhost:3000/todos/${id}`,
@@ -691,7 +691,7 @@ $(document).ready(function (e) {
 //         })
 // }
 
-// function translateTodo(id, data, cb) {
+// function translateClass(id, data, cb) {
 //     $.ajax({
 //         method: 'GET',
 //         url: `http://localhost:3000/todos/translate/${id}`,
