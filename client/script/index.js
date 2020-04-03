@@ -173,6 +173,7 @@ function logout() {
   if (id_token)
     logoutGoogle(id_token);
   showUserPage();
+
 }
 
 function logoutGoogle(id_token) {
@@ -465,6 +466,7 @@ function showListPage() {
 
 
 function showUserPage() {
+  isSignedIn = false;
   $('#name').val(null);
   $('#emailR').val(null);
   $('#passwordR').val(null);
@@ -572,7 +574,7 @@ function voice(message = null) {
     data: data
   })
     .then(result => {
-      if (('#UserPage:visible').length > 0 && !isSignedIn) {
+      if (('#UserPage:visible').length > 0) {
         $('#loginBtn').html('Login');
         showListPage();
         $('#registerBtn').html('Register');
