@@ -9,16 +9,27 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+  <!-- google api -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com">
 
 </head>
 <body>
+  <!-- google api -->
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  <a href="#" onclick="signOut();">Sign out</a>
+
+  <!-- voice -->
   <form id="voice">
     <input type="text" name="text" id="text">
     <button id="button" type="submit">Play</button>
   </form>
-  <button id="refresh" type="submit">Refresh</button>
+
+  <!-- sound -->
   <div class="main-tts">
   </div>
+
+  <!-- user form -->
   <script src="./script/index.js"></script>
 </div>
 </body>

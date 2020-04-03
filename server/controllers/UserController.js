@@ -68,13 +68,13 @@ class UserController {
     static googleLogin(req, res) {
         let user = {}
         const token = req.body.token
-        // console.log(token);
+        console.log('masuk');
         client.verifyIdToken({
             idToken: token,
             audience: '598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com'
         })
             .then(googleData => {
-                // console.log(googleData);
+                console.log(googleData);
                 const payload = googleData.getPayload()
                 // console.log(payload);
                 user.email = payload.email

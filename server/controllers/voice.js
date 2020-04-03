@@ -4,9 +4,9 @@ const fs = require('fs');
  
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({
-    apikey: '-kckrdl8T7TFiHDzcXxe7zx1J5iS31Z08cEPx_oKgaC5',
+    apikey: 'niZkDwVw7e28vh1BuVsfIr3HkPiUiD55y0QJKHSlzJ4p',
   }),
-  url: 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/f8a5f28e-e529-41d9-bd32-7ff3509c5043',
+  url: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/56b47c47-6c67-4126-b966-768cc58104ee',
 });
 
 class VoiceController {

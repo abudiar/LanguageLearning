@@ -46,3 +46,35 @@ $( document ).ready(function() {
     request2.send();
   }
 })
+
+// google
+function onSignIn(googleUser) {
+  let id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    url: 'http://localhost:3000/user/google-login',
+    method: 'POST',
+    data: {
+      id_token
+    }
+  })
+  .done(result => {
+    localStorage.setItem('access_token', result.access_token)
+    token = localStorage.access_token
+    console.log(result, 'RESUL NIH');
+    // location.reload();
+    // window.location.reload();
+  })
+  .fail(err => {
+    console.log(err)
+    let errors = ['Email has registered']
+    errors.forEach(el => {
+    })
+  })
+}
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+}
