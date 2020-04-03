@@ -42,7 +42,7 @@ class ClassController {
     Class.findOne({ where: { id: req.params.id, UserId } })
       .then((lang) => {
         if (lang) {
-          res.status(200).json(todo);
+          res.status(200).json(lang);
         } else {
           throw new Error('Class not found');
         }
@@ -55,13 +55,13 @@ class ClassController {
   static deleteClass(req, res, next) {
     let deletedClass;
     const UserId = req.user.id;
-    Todo.findOne({ where: { id: req.params.id, UserId } })
+    Class.findOne({ where: { id: req.params.id, UserId } })
       .then(lang => {
         if (lang) {
           deletedClass = lang;
           return Class.destroy({ where: { id: req.params.id }, returning: true });
         } else {
-          throw new Error('Todo not found');
+          throw new Error('Class not found');
         }
       })
       .then(lang => {
