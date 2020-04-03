@@ -16,16 +16,17 @@ $(document).ready(function () {
 
   }
 
-  if (localStorage.getItem('targetLang'))
-    $('#languageName').html(langCodes[localStorage.getItem('targetLang')]);
 
-  if (localStorage.getItem('language'))
-    $('#languageName').html(localStorage.getItem('language'));
+  // if (localStorage.getItem('language'))
+  //   $('#languageName').html(localStorage.getItem('language'));
 
   $('#translateText').on('input', function () {
     updateTranslation()
     lastType = performance.now();
     auto_grow($(this))
+  })
+  $('.back').click(function () {
+    showListPage();
   })
 
   $('.switch-button-case.left').click(function () {
@@ -386,15 +387,15 @@ function showListPage() {
       itemIds: [],
       langIds: []
     };
-    console.log(data)
+    // console.log(data)
     for (let i in data) {
-      console.log(data[i])
+      // console.log(data[i])
       const newItem = `<li class="list-group-item">
                 <table class=" trash transition" style="color: white;position:relative; z-index:5;">
                     <tr>
-                        <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-                            <h5 class="class-title checked"style="margin:0;">${langCodes[data[i]['idLang']]}</h5>
-                            <p class="description transition checked" >You've spent ${Math.floor(Math.random() * 100)} minutes today! Good Job!</p>
+                        <th class="button check langIdSPLIT${data[i]['idLang']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
+                            <h5 class="class-title"style="text-align:left;margin:0;">${langCodes[data[i]['idLang']]}</h5>
+                            <p class="description transition"style="text-align:left;" >You've spent ${Math.floor(Math.random() * 100)} minutes today! Good Job!</p>
                         </th>
                     </tr>
                 </table>
@@ -411,14 +412,14 @@ function showListPage() {
         const newItem = `<li class="list-group-item">
                 <table class=" trash transition" style="color: white;position:relative; z-index:5;">
                     <tr>
-                        <th class="button check btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-                            <h5 class="class-title checked"style="margin:0;">${langCodes[key]}</h5>
+                        <th class="button btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
+                            <h5 class="class-title checked"style="margin:0;color: rgb(107, 107, 107);">${langCodes[key]}</h5>
                             <p class="description transition checked" ></p>
                         </th>
                     </tr>
                 </table>
                 <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
-                    <h5 style="margin:0;" class="fa fa-check button transition btn-icon langIdSPLIT${key}">SPLIT" aria-hidden="true"></h5>
+                    <h5 style="margin:0;" class="fa fa-check button transition btn-icon langIdSPLIT${key}SPLIT" aria-hidden="true"></h5>
                 </nav>
             </li>`
         $('.list-group.class-list').append(newItem);
@@ -444,11 +445,16 @@ function showListPage() {
           showListPage();
         });
       }
-      else if ($(this).attr('class').includes('check')) {
+      else if ($(this).attr('class').includes('fa-check')) {
         if (!subscribedList['itemIds'].includes(id)) {
-          addClass(id, function (e) {
+          addClass({ idLang: id }, function (e) {
             showListPage();
           })
+        }
+      }
+      else if ($(this).attr('class').includes('check')) {
+        if (!subscribedList['itemIds'].includes(id)) {
+          showLangPage(id);
         }
       }
     });
@@ -466,6 +472,19 @@ function showUserPage() {
   $('#email').val(null);
   hideAll();
   $('#UserPage').show();
+}
+
+function showLangPage(langId) {
+  $('#translateText').val(null);
+  $('#translatedText').html('Start typing to learn');
+  localStorage.setItem('targetLang', langId);
+
+  if (localStorage.getItem('targetLang')) {
+    console.log(localStorage.getItem('targetLang'))
+    $('#languageName').html(langCodes[localStorage.getItem('targetLang')]);
+  }
+  hideAll();
+  $('#LanguangePage').show();
 }
 
 function hideAll() {
@@ -582,7 +601,7 @@ function onSignIn(googleUser) {
       localStorage.setItem('name', user.name);
       if (!isSignedIn) {
         isSignedIn = true;
-        voice(`Welcome, ${user.name}... Enjoy using our site`);
+        // voice(`Welcome, ${user.name}... Enjoy using our site`);
       }
     })
     .fail(err => {

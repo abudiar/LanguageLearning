@@ -19,7 +19,7 @@ body {
 }
 
 .trash {
-  /* width: 100%; */
+  width: 100%;
   margin-right: 0px;
 }
 
@@ -32,13 +32,14 @@ body {
 }
 
 .trash.selected {
+  width: auto;
   margin-right: 130px;
 }
 
 .description.selected {
   height: auto;
   margin: 16px 0 0 0;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .translateData {
@@ -162,14 +163,16 @@ ul li {
 }
 
 .list-group-item {
-  background: #6c757d;
+  background: #ebeef0;
+  color: rgb(107, 107, 107);
   padding: 0;
   border-left: 0;
   border-right: 0;
 }
 
 .check {
-  background: #6c757d;
+  /* background: #6c757d; */
+  color: rgb(107, 107, 107);
 }
 
 .btn-google {
