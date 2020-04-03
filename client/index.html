@@ -19,7 +19,7 @@
 
     <!-- Google -->
     <meta name="google-signin-client_id"
-        content="142472030354-i6m882420v7cbjtg5ekl08vkm749anap.apps.googleusercontent.com">
+        content="598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com">
     <meta name="google-signin-scope" content="profile email">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/client.js?onload=onLoadCallback"></script>
@@ -32,6 +32,41 @@
 
 <body>
     <div class="card bg-light">
+
+
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a>
+
+        <form id="voice">
+            <input type="text" name="text" id="text">
+            <button id="button" type="submit">Play</button>
+        </form>
+
+        <div class="main-tts">
+        </div>
+
+        <form id="login">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <button type="submit">Login</button>
+        </form>
+
+        <form id="register">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name">
+            <label for="emailR">Email</label>
+            <input type="email" name="emailR" id="emailR">
+            <label for="passwordR">Password</label>
+            <input type="password" name="password" id="passwordR">
+            <button type="submit">Register</button>
+        </form>
+
+
+
+
+
         <!-- UserPage -->
         <div id="UserPage" style="display: none">
             <!-- Login and Register Buttons -->
@@ -222,37 +257,6 @@
     <script src="helpers/consts.js"></script>
     <script src="js/main.js"></script>
     <script src="script/index.js"></script>
-
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" onclick="signOut();">Sign out</a>
-
-    <form id="voice">
-        <input type="text" name="text" id="text">
-        <button id="button" type="submit">Play</button>
-    </form>
-
-    <div class="main-tts">
-    </div>
-
-    <form id="login">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <button type="submit">Login</button>
-    </form>
-
-    <form id="register">
-        <label for="name">Full Name</label>
-        <input type="text" name="name" id="name">
-        <label for="emailR">Email</label>
-        <input type="email" name="emailR" id="emailR">
-        <label for="passwordR">Password</label>
-        <input type="password" name="password" id="passwordR">
-        <button type="submit">Register</button>
-    </form>
-
-    <script src="./script/index.js"></script>
     </div>
 </body>
 

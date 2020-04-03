@@ -183,8 +183,8 @@ function loadingAudio() {
 }
 
 function playAudio() {
+  audio.play();
   if ($('#loading').length) {
-    audio.play();
     $('#loading').replaceWith(`
     <button id="pause" class="simple-button btn btn-lg text-uppercase full btn-icon  p-3 inner-shadow">
         Pause
@@ -202,8 +202,8 @@ function attachPause() {
   }
 }
 function pauseAudio() {
+  audio.pause();
   if ($('#pause').length) {
-    audio.pause();
     $('#pause').replaceWith(`
     <button id="play" class="simple-button btn btn-lg text-uppercase full btn-icon  p-3 inner-shadow">
         Play
