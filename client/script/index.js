@@ -156,15 +156,16 @@ function attachPlay() {
       //   text: $('#text').val(),
       //   voice: $('#lang').val()
       // }
-      let request = new XMLHttpRequest();
-      request.open("GET", `http://localhost:3000/voices?voice=${localStorage.getItem('speaker')}&text=${$('#translatedText').html()}`, true);
-      request.onload = function () {
-        if (this.status == 200) {
-          play(this.response)
-        }
-      }
-      request.send();
+      // let request = new XMLHttpRequest();
+      // request.open("GET", `http://localhost:3000/voices?voice=${localStorage.getItem('speaker')}&text=${$('#translatedText').html()}`, true);
+      // request.onload = function () {
+      //   if (this.status == 200) {
+      //     play(this.response)
+      //   }
+      // }
+      // request.send();
       // playAudio();
+      voice();
     });
   }
 }
@@ -439,8 +440,8 @@ function ajaxFunction(method, url, data) {
 
 function voice(message = null) {
   const data = {
-    text: $('#text').val(),
-    voice: $('#lang').val()
+    text: $('#translatedText').html(),
+    voice: localStorage.getItem('speaker')
   }
   if (message) {
     data.text = message;
@@ -456,7 +457,6 @@ function voice(message = null) {
     })
     .fail(fail => {
     })
-
 }
 
 // google

@@ -22,7 +22,7 @@ class VoiceController {
         textToSpeech.synthesize(synthesizeParams)
             .then(audio => {
                 const audioFile = `${randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')}.wav`;
-                let tempFile = fs.createWriteStream(`./public/${audioFile}`);
+                let tempFile = fs.createWriteStream(`./public/audio/${audioFile}`);
                 audio.result.pipe(tempFile);
                 tempFile.on('finish', function (fd) {
                     console.log(audioFile)
