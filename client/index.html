@@ -223,6 +223,43 @@
     <script src="js/main.js"></script>
     <script src="script/index.js"></script>
 
+    <!-- google api -->
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+
+    <!-- voice -->
+    <form id="voice">
+        <input type="text" name="text" id="text">
+        <button id="button" type="submit">Play</button>
+    </form>
+
+    <!-- sound -->
+    <div class="main-tts">
+    </div>
+
+    <!-- function login -->
+    <form id="login">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- function register -->
+    <form id="register">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name">
+        <label for="emailR">Email</label>
+        <input type="email" name="emailR" id="emailR">
+        <label for="passwordR">Password</label>
+        <input type="password" name="password" id="passwordR">
+        <button type="submit">Register</button>
+    </form>
+
+    <!-- user form -->
+    <script src="./script/index.js"></script>
+    </div>
 </body>
 
 

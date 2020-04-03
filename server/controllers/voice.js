@@ -1,108 +1,28 @@
-const axios = require('axios');
 const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const fs = require('fs');
 
 const textToSpeech = new TextToSpeechV1({
     authenticator: new IamAuthenticator({
-        apikey: 'god133D4NoOSOPuVuCspGqKaSVqNCk8_BoIteesPoYEh',
+        apikey: 'niZkDwVw7e28vh1BuVsfIr3HkPiUiD55y0QJKHSlzJ4p',
     }),
-    url: 'https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/1bcc4613-3f80-483a-9d33-0bf6843eeef2',
+    url: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/56b47c47-6c67-4126-b966-768cc58104ee',
 });
-
-const getVoiceParams = {
-    voice: 'en-US_AllisonVoice',
-};
-
-
-// textToSpeech.getVoice(getVoiceParams)
-//   .then(voice => {
-//     console.log(JSON.stringify(voice, null, 2));
-//   })
-//   .catch(err => {
-//     console.log('error:', err);
-//   });
 
 class VoiceController {
     static getVoice(req, res, next) {
-        console.log(req.query, 'dari client')
-        console.log(req.data, 'dari client')
-        console.log(req.body, 'dari client')
-        const { voice, text } = req.query
-            , lang = '';
-        // axios({
-        //     method: 'post',
-        //     url: 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/f8a5f28e-e529-41d9-bd32-7ff3509c5043/v1/synthesize?voice=' + voice,
-        //     headers: {
-        //         accept: 'audio/wav',
-        //         'content-type': 'application/json',
-        //         authorization: 'Basic YXBpa2V5Oi1rY2tyZGw4VDdURmlIRHpjWHhlN3p4MUo1aVMzMVowOGNFUHhfb0tnYUM1'
-        //     },
-        //     data: {
-        //         text
-        //     }
-        //     // responseType: 'blob'
-        // })
-        //     .then(audio => {
-        //         // console.log(typeof audio.data)
-        //         // res.status(200).json({data: audio.data})
-        //         // audio.pause();
-        //         // audio.src = URL.createObjectURL(response.data);
-        //         // audio.play();
-        //         res.writeHead(200, {
-        //             'Content-Type': 'audio/wav',
-        //             'Content-disposition': 'attachment;filename=' + 'filename',
-        //             'Content-Length': audio.data.length
-        //         });
-        //         res.end(Buffer.from(audio.data, 'audio/wav'))
-        //         // res.send(`<audio controls>
-        //         //   <source src="${audio.data}" type="audio/wav"></audio>
-        //         // `)
-        //     })
-        //     .catch(err => {
-        //         res.status(500).send(err.message)
-        //         console.log(err, 'error')
-        //     })
-
-        // const synthesizeParams = { text: 'This is test from server yo', accept: 'audio/wav', voice: 'en-US_AllisonVoice', };
-
-        // textToSpeech.synthesize(synthesizeParams)
-        //     .then(audio => {
-        //         console.log("Audio Received : ");
-        //         var blob=new Blob(audio, {type : 'audio/wav'});
-        //         res.send(blob);
-        // })
-
-        // const synthesizeParams = {
-        //     text: 'Hello world',
-        //     accept: 'audio/wav',
-        //     voice: 'en-US_AllisonVoice',
-        //   }
-
-        //   textToSpeech.synthesize(synthesizeParams)
-        //     .then(audio => {
-        //       audio.result.pipe(fs.createWriteStream('../client/kobeda.wav'));
-        //       res.status(200).send('kobeda')
-        //     })
-        //     .catch(err => {
-        //       console.log('error:', err);
-        //     });
-
+        const { voice, text } = req.body
+        let hasil
         const synthesizeParams = {
             text,
             voice,
             accept: 'audio/wav',
         }
-        function randomString(length, chars) {
-            var result = '';
-            for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
-            return result;
-        }
 
         textToSpeech.synthesize(synthesizeParams)
             .then(audio => {
                 const audioFile = `${randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')}.wav`;
-                let tempFile = fs.createWriteStream(`./public/audio/${audioFile}`);
+                let tempFile = fs.createWriteStream(`./public/${audioFile}`);
                 audio.result.pipe(tempFile);
                 tempFile.on('finish', function (fd) {
                     console.log(audioFile)
@@ -111,8 +31,14 @@ class VoiceController {
             })
             .catch(err => {
                 console.log('error:', err);
+                next(err);
             });
 
+        function randomString(length, chars) {
+            var result = '';
+            for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+            return result;
+        }
     }
 }
 

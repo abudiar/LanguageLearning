@@ -1,0 +1,28 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "delapan8",
+    "database": "LanguageLearning",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "google": {
+    "client_id": "598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com"
+  }
+}
