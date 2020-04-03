@@ -601,7 +601,7 @@ function onSignIn(googleUser) {
       localStorage.setItem('name', user.name);
       if (!isSignedIn) {
         isSignedIn = true;
-        // voice(`Welcome, ${user.name}... Enjoy using our site`);
+        voice(`Welcome, ${user.name}... Enjoy using our site`);
       }
     })
     .fail(err => {

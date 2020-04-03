@@ -21,7 +21,7 @@ body {
 .trash {
   width: 100%;
   margin-right: 0px;
-  background: white;
+  /* background: white; */
   text-align: left;
 }
 
