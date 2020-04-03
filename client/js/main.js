@@ -155,8 +155,8 @@ $(document).ready(function (e) {
     //         e.preventDefault();
     //         e.stopPropagation();
     //         const data = {
-    //             email: $('#loginEmail').val(),
-    //             password: $('#loginPassword').val()
+    //             email: $('#email').val(),
+    //             password: $('#password').val()
     //         }
     //         // User.login(data);
     //         login(data);
@@ -166,9 +166,9 @@ $(document).ready(function (e) {
     //         e.preventDefault();
     //         e.stopPropagation();
     //         const data = {
-    //             name: $('#registerName').val(),
-    //             email: $('#registerEmail').val(),
-    //             password: $('#registerPassword').val()
+    //             name: $('#name').val(),
+    //             email: $('#emailR').val(),
+    //             password: $('#passwordR').val()
     //         }
 
     //         register(data);
@@ -432,11 +432,11 @@ $(document).ready(function (e) {
 // }
 
 // function showUserPage() {
-//     $('#registerName').val(null);
-//     $('#registerEmail').val(null);
-//     $('#registerPassword').val(null);
-//     $('#loginPassword').val(null);
-//     $('#loginEmail').val(null);
+//     $('#name').val(null);
+//     $('#emailR').val(null);
+//     $('#passwordR').val(null);
+//     $('#password').val(null);
+//     $('#email').val(null);
 //     hideAll();
 //     $('#UserPage').show();
 // }
@@ -506,8 +506,8 @@ $(document).ready(function (e) {
 //             googleAuthResponse = AuthResponse;
 //             const data = {
 //                 token,
-//                 password: $('#registerPassword').val(),
-//                 email: $('#registerEmail').val(),
+//                 password: $('#passwordR').val(),
+//                 email: $('#emailR').val(),
 //                 name: resp.given_name
 //             }
 //             $.ajax({
@@ -578,13 +578,13 @@ $(document).ready(function (e) {
 // function logout() {
 //     localStorage.removeItem('accessToken');
 //     if (googleAuthResponse)
-//         logoutGoogle(googleAuthResponse.access_token);
+//         logoutGoogle(googleAuthResponse.accessToken);
 //     showUserPage();
 // }
 
-// function logoutGoogle(access_token) {
+// function logoutGoogle(accessToken) {
 //     let revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' +
-//         access_token;
+//         accessToken;
 
 //     // Perform an asynchronous GET request.
 //     $.ajax({

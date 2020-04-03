@@ -34,10 +34,10 @@
     <div class="card bg-light">
 
 
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <a href="#" onclick="signOut();">Sign out</a>
+        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" onclick="signOut();">Sign out</a> -->
 
-        <form id="voice">
+        <!-- <form id="voice">
             <input type="text" name="text" id="text">
             <button id="button" type="submit">Play</button>
         </form>
@@ -61,14 +61,14 @@
             <label for="passwordR">Password</label>
             <input type="password" name="password" id="passwordR">
             <button type="submit">Register</button>
-        </form>
+        </form> -->
 
 
 
 
 
         <!-- UserPage -->
-        <div id="UserPage" style="display: none">
+        <div id="UserPage" style="display: none;">
             <!-- Login and Register Buttons -->
             <div class="container-switch">
                 <div class="switch-back switch-button"></div>
@@ -84,20 +84,21 @@
             </div>
             <!-- Login Body -->
             <div class="card-body login transition visible">
-                <form class="form-login">
+                <form id="login" class="form-login">
                     <div class="form-label-group">
-                        <input type="email" name="loginEmail" id="loginEmail" class="form-control"
-                            placeholder="Email address" required autofocus>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Email address"
+                            required autofocus>
                     </div>
 
                     <div class="form-label-group">
-                        <input type="password" name="loginPassword" id="loginPassword" class="form-control"
-                            placeholder="Password" required>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password"
+                            required>
                     </div>
-                    <button id="login" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
+                    <button id="loginBtn" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
                         in</button>
                 </form>
                 <hr class="my-4">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
                         class="fab fa-google mr-2"></i> Sign in with Google</button>
                 <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
@@ -105,25 +106,26 @@
             </div>
             <!-- Register Body -->
             <div class="card-body register transition hidden">
-                <form class="form-register">
+                <form id="register" class="form-register">
                     <div class="form-label-group">
-                        <input type="string" name="registerName" id="registerName" class="form-control"
-                            placeholder="Name" required autofocus>
+                        <input type="string" name="name" id="name" class="form-control" placeholder="Name" required
+                            autofocus>
                     </div>
 
                     <div class="form-label-group">
-                        <input type="email" name="registerEmail" id="registerEmail" class="form-control"
-                            placeholder="Email address" required>
+                        <input type="email" name="emailR" id="emailR" class="form-control" placeholder="Email address"
+                            required>
                     </div>
 
                     <div class="form-label-group">
-                        <input type="password" name="registerPassword" id="registerPassword" class="form-control"
+                        <input type="password" name="passwordR" id="passwordR" class="form-control"
                             placeholder="Password" required>
                     </div>
-                    <button id="register" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
+                    <button id="registerBtn" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
                         Up</button>
                 </form>
                 <hr class="my-4">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
                         class="fab fa-google mr-2"></i> Sign up with Google</button>
                 <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
@@ -136,7 +138,7 @@
                 <nav class=" navbar navbar-dark justify-content-between text-center">
                     <h5 class="logout transition btn-icon"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h5>
                     <h1 style="color:transparent;cursor:default;">List</h1>
-                    <h5 style="color:transparent;cursor:default;"><i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <h5 style="color:transparent;cursor:default;"><a class="fa fa-sign-out" aria-hidden="true"></a>
                         Logout
                     </h5>
                 </nav>
@@ -154,7 +156,7 @@
             </ul>
         </div>
         <!-- LanguangePage -->
-        <div id="LanguangePage">
+        <div id="LanguangePage" style="display: none;">
             <!-- PageSettings -->
             <div id="pageSettings" class="transition close">
                 <h5 style="width: 100%; color: black;">Learning Settings</h5>

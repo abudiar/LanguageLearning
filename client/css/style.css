@@ -172,90 +172,6 @@ ul li {
   background: #6c757d;
 }
 
-.container-switch {
-  padding-top: 60px;
-  width: 100%;
-  justify-content: center;
-  position: relative;
-}
-
-.switch-back {
-  opacity: 20%;
-  background: #7f7fd5;
-  background: linear-gradient( 49deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-}
-
-.switch-button {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  position: absolute;
-  /* border-radius: 25px; */
-  left: 50%;
-  top: 50%;
-  transform: translate3D(-50%, -50%, 0);
-  will-change: transform;
-  z-index: 2 !important;
-  cursor: default;
-  transition: 0.3s ease all;
-  /* border: 1px solid rgba(255, 255, 255, 0.5); */
-}
-
-.switch-button-case {
-  top: 0;
-  display: inline-block;
-  background: none;
-  width: 49%;
-  height: 100%;
-  color: rgba(211, 211, 211, 0.2);
-  position: relative;
-  border: none;
-  transition: 0.3s ease all;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding-bottom: 1px;
-}
-
-.switch-button-case.not-active:hover {
-  color: rgba(211, 211, 211, 0.5);
-  cursor: pointer;
-  letter-spacing: 3px;
-  transition: all 0.4s ease 0s;
-}
-
-.switch-button-case:focus {
-  outline: none;
-}
-
-.switch-button .active {
-  color: #151515;
-  background: #343a40;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  /* background: -webkit-linear-gradient( to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-    background: -o-linear-gradient( to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-    background: -moz-linear-gradient( to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-    background-image: linear-gradient( to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1); */
-  background-size: 200% 100%;
-  background-position: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  z-index: -1;
-  transition: 0.3s ease-out all;
-  /* border-radius: 25px; */
-  cursor: default;
-}
-
-.switch-button .active-case {
-  color: white;
-}
-
-.switch-button .active-case:hover {
-  cursor: default;
-}
-
 .btn-google {
   color: white;
   background-color: #ea4335;
@@ -308,7 +224,7 @@ input[type="checkbox"]:checked::before {
   opacity: 1;
 }
 
-input[type="checkbox"]:checked~.class-title::before {
+input[type="checkbox"]:checked ~ .class-title::before {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
@@ -367,7 +283,11 @@ input[type="checkbox"]:checked~.class-title::before {
 
 .colorful {
   background: rgb(238, 174, 202);
-  background: linear-gradient( 49deg, rgb(236, 174, 238) 0%, rgb(148, 216, 233) 100%);
+  background: linear-gradient(
+    49deg,
+    rgb(236, 174, 238) 0%,
+    rgb(148, 216, 233) 100%
+  );
 }
 
 textarea {
@@ -433,7 +353,8 @@ textarea:focus {
   padding: 50px;
 }
 
-#SpeakerForm {}
+#SpeakerForm {
+}
 
 .half {
   width: 49%;
@@ -448,6 +369,95 @@ textarea:focus {
   cursor: pointer;
 }
 
+.container-switch {
+  padding-top: 60px;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+.switch-back {
+  opacity: 20%;
+  background: #7f7fd5;
+  background: linear-gradient(
+    49deg,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+}
+
+.switch-button {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  /* border-radius: 25px; */
+  left: 50%;
+  top: 50%;
+  transform: translate3D(-50%, -50%, 0);
+  will-change: transform;
+  z-index: 2 !important;
+  cursor: default;
+  transition: 0.3s ease all;
+  /* border: 1px solid rgba(255, 255, 255, 0.5); */
+}
+
+.switch-button-case {
+  top: 0;
+  display: inline-block;
+  background: none;
+  width: 49%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.2);
+  position: relative;
+  border: none;
+  transition: 0.3s ease all;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding-bottom: 1px;
+}
+
+.switch-button-case.not-active:hover {
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  letter-spacing: 3px;
+  transition: all 0.4s ease 0s;
+}
+
+.switch-button-case:focus {
+  outline: none;
+}
+
+.switch-button .active {
+  color: #151515;
+  background: #f8f9fa;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  /* background: linear-gradient(
+    49deg,
+    rgb(236, 174, 238) 0%,
+    rgb(148, 216, 233) 100%
+  ); */
+  background-size: 200% 100%;
+  background-position: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: -1;
+  transition: 0.3s ease-out all;
+  /* border-radius: 25px; */
+  cursor: default;
+}
+
+.switch-button .active-case {
+  color: rgb(0, 0, 0);
+}
+
+.switch-button .active-case:hover {
+  cursor: default;
+}
+
 /*Styling Selectbox*/
 
 .dropdown {
@@ -456,45 +466,46 @@ textarea:focus {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 2px rgb(204, 204, 204);
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   position: relative;
   font-size: 14px;
   color: #474747;
   height: 100%;
-  text-align: left
+  text-align: left;
 }
 
 .dropdown .select {
   cursor: pointer;
   display: block;
-  padding: 10px
+  padding: 10px;
 }
 
-.dropdown .select>i {
+.dropdown .select > i {
   font-size: 13px;
   color: #888;
   cursor: pointer;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   float: right;
-  line-height: 20px
+  line-height: 20px;
 }
 
 .dropdown:hover {
-  box-shadow: 0 0 4px rgb(204, 204, 204)
+  box-shadow: 0 0 4px rgb(204, 204, 204);
 }
 
 .dropdown:active {
-  background-color: #f8f8f8
+  background-color: #f8f8f8;
 }
 
-.dropdown.active:hover, .dropdown.active {
+.dropdown.active:hover,
+.dropdown.active {
   box-shadow: 0 0 4px rgb(204, 204, 204);
   border-radius: 5px 5px 0 0;
-  background-color: #f8f8f8
+  background-color: #f8f8f8;
 }
 
-.dropdown.active .select>i {
-  transform: rotate(-90deg)
+.dropdown.active .select > i {
+  transform: rotate(-90deg);
 }
 
 .dropdown .dropdown-menu {
@@ -509,26 +520,26 @@ textarea:focus {
   display: none;
   max-height: 144px;
   overflow-y: auto;
-  z-index: 9
+  z-index: 9;
 }
 
 .dropdown .dropdown-menu li {
   padding: 10px;
-  transition: all .2s ease-in-out;
-  cursor: pointer
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .dropdown .dropdown-menu {
   padding: 0;
-  list-style: none
+  list-style: none;
 }
 
 .dropdown .dropdown-menu li:hover {
-  background-color: #f2f2f2
+  background-color: #f2f2f2;
 }
 
 .dropdown .dropdown-menu li:active {
-  background-color: #e2e2e2
+  background-color: #e2e2e2;
 }
 
 .dropdown:focus {

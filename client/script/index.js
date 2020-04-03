@@ -3,10 +3,18 @@ let lastVal = '';
 let curVal = '';
 const loadingUpdates = [0, 0];
 let audio;
-
+let id_token;
 $(document).ready(function () {
-  setInterval(updateTranslation, 500)
-  localStorage.setItem('targetLang', 'ja')
+  setInterval(updateTranslation, 500);
+  // localStorage.setItem('targetLang', 'ja');
+
+  if (!localStorage.getItem('accessToken'))
+    $('#UserPage').show();
+  else {
+    showListPage();
+
+  }
+
   if (localStorage.getItem('targetLang'))
     $('#languageName').html(langCodes[localStorage.getItem('targetLang')]);
 
@@ -17,6 +25,14 @@ $(document).ready(function () {
     updateTranslation()
     lastType = performance.now();
     auto_grow($(this))
+  })
+
+  $('.switch-button-case.left').click(function () {
+    switchLeft();
+  })
+
+  $('.switch-button-case.right').click(function () {
+    switchRight();
   })
 
   $(window).click(function () {
@@ -37,6 +53,10 @@ $(document).ready(function () {
 
   $('#pageSettings').click(function (e) {
     e.stopPropagation();
+  })
+
+  $('.logout').click(function () {
+    logout();
   })
 
   // $('#voice').submit(function (e) {
@@ -89,9 +109,10 @@ $(document).ready(function () {
     const password = $('#password').val();
     ajaxFunction('POST', 'user/login', { email, password })
       .done(user => {
-        let { access_token } = user;
-        localStorage.setItem('access_token', access_token);
+        let { accessToken } = user;
+        localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('name', user.name);
+        $('#loginBtn').html('Loading...');
         voice(`Welcome, ${user.name}... Enjoy using our site`);
       })
   })
@@ -104,13 +125,78 @@ $(document).ready(function () {
     const password = $('#passwordR').val();
     ajaxFunction('POST', 'user/register', { email, password, full_name })
       .done(user => {
-        let { access_token } = user
-        localStorage.setItem('access_token', access_token);
+        let { accessToken } = user
+        localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('name', user.name);
+        $('#registerBtn').html('Loading...');
         voice(`Welcome, ${user.name}... Enjoy using our site`);
       })
   })
 })
+
+function switchLeft() {
+  $('.switch-button-case.left').addClass("active-case");
+  $('.switch-button-case.right').removeClass("active-case");
+  $('.switch-button-case.right').addClass("not-active");
+  $('.switch-button-case.left').removeClass("not-active");
+  $('.switch-button .active').css("left", "0%");
+  $('.switch-button .active').css("backgroundPosition", "0%");
+  $('.login').removeClass("hidden");
+  $('.login').addClass("visible");
+  $('.register').removeClass("visible");
+  $('.register').addClass("hidden");
+}
+
+function switchRight() {
+  $('.switch-button-case.right').addClass("active-case");
+  $('.switch-button-case.left').removeClass("active-case");
+  $('.switch-button-case.left').addClass("not-active");
+  $('.switch-button-case.right').removeClass("not-active");
+  $('.switch-button .active').css("left", "50%");
+  $('.switch-button .active').css("backgroundPosition", "100%");
+  $('.login').removeClass("visible");
+  $('.login').addClass("hidden");
+  $('.register').removeClass("hidden");
+  $('.register').addClass("visible");
+}
+
+function logout() {
+  // localStorage.removeItem('accessToken');
+  // var auth2 = gapi.auth2.getAuthInstance();
+  // auth2.signOut().then(function () {
+  //   console.log('User signed out.');
+  // });
+  // showUserPage();
+  localStorage.removeItem('accessToken');
+  if (id_token)
+    logoutGoogle(id_token);
+  showUserPage();
+}
+
+function logoutGoogle(id_token) {
+  let revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' +
+    id_token;
+
+  // Perform an asynchronous GET request.
+  $.ajax({
+    type: 'GET',
+    url: revokeUrl,
+    async: false,
+    contentType: "application/json",
+    dataType: 'jsonp',
+    success: function (nullResponse) {
+      // toastr.success('Successfully signed out of Google');
+      // Do something now that user is disconnected
+      // The response is always undefined.
+    },
+    error: function (e) {
+      // Handle the error
+      // console.log(e);
+      // You could point users to manually disconnect if unsuccessful
+      // https://plus.google.com/apps
+    }
+  });
+}
 
 function auto_grow(el) {
   console.log(el.prop('scrollHeight'))
@@ -291,82 +377,92 @@ function play(filePath) {
 function showListPage() {
   showUserPage(); // Make sure to clear user page
   $('#TitleUser').html(`Hey ${localStorage.getItem('name')}, `);
-  getClasses((data) => {
-    $('#SubUser').text(`You've started learning ${data.length} languages!`);
-    $('.list-group.class-list').html('');
-    const subscribedList = {
-      itemIds: [],
-      langIds: []
-    };
-    for (let i in data) {
-      const newItem = `<li class="list-group-item">
-                <table class=" trash transition" style="color: white;position:relative; z-index:5;">
-                    <tr>
-                        <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-                            <h5 class="class-title checked"style="margin:0;">${langCodes[data[i]['idLang']]}</h5>
-                            <p class="description transition checked" >You've spent ${Math.floor(Math.random() * 100)} minutes today! Good Job!</p>
-                        </th>
-                    </tr>
-                </table>
-                <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
-                    <h5 style="margin:0;" class="fa fa-trash button transition btn-icon idSPLIT${data[i]['id']}SPLIT" aria-hidden="true"></h5>
-                </nav>
-            </li>`
-      subscribedList['langIds'].push(data[i]['idLang']);
-      subscribedList['itemIds'].push(data[i]['id']);
-      $('.list-group.subscribed-list').append(newItem);
-    }
-    for (let key in langCodes) {
-      if (!subscribedList['langIds'].includes(key)) {
-        const newItem = `<li class="list-group-item">
-                <table class=" trash transition" style="color: white;position:relative; z-index:5;">
-                    <tr>
-                        <th class="button check btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
-                            <h5 class="class-title checked"style="margin:0;">${langCodes[key]}</h5>
-                            <p class="description transition checked" ></p>
-                        </th>
-                    </tr>
-                </table>
-                <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
-                    <h5 style="margin:0;" class="fa fa-check button transition btn-icon langIdSPLIT${key}">SPLIT" aria-hidden="true"></h5>
-                </nav>
-            </li>`
-        $('.list-group.class-list').append(newItem);
-      }
-    }
-    $('.list-group-item').hover(function (e) {
-      $('.trash').removeClass("selected");
-      $('.description').removeClass("selected");
-      $(this).find('.trash').addClass("selected");
-      if ($(this).find('.description').text().length > 0) {
-        $(this).find('.description').addClass("selected");
-      }
-    });
-    $('.list-group-item').mouseleave(function (e) {
-      $('.trash').removeClass("selected");
-      $('.description').removeClass("selected");
-    });
-    $('.button').click(function (e) {
-      e.stopPropagation();
-      const id = $(this).attr('class').split('SPLIT')[1];
-      if ($(this).attr('class').includes('fa-trash')) {
-        deleteClass(id, () => {
-          showListPage();
-        });
-      }
-      else if ($(this).attr('class').includes('check')) {
-        if (!subscribedList['itemIds'].includes(id)) {
-          addClass(id, function (e) {
-            showListPage();
-          })
-        }
-      }
-    });
-  })
+  // getClasses((data) => {
+  //   $('#SubUser').text(`You've started learning ${data.length} languages!`);
+  //   $('.list-group.class-list').html('');
+  //   const subscribedList = {
+  //     itemIds: [],
+  //     langIds: []
+  //   };
+  //   for (let i in data) {
+  //     const newItem = `<li class="list-group-item">
+  //               <table class=" trash transition" style="color: white;position:relative; z-index:5;">
+  //                   <tr>
+  //                       <th class="button check idSPLIT${data[i]['id']}SPLIT btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
+  //                           <h5 class="class-title checked"style="margin:0;">${langCodes[data[i]['idLang']]}</h5>
+  //                           <p class="description transition checked" >You've spent ${Math.floor(Math.random() * 100)} minutes today! Good Job!</p>
+  //                       </th>
+  //                   </tr>
+  //               </table>
+  //               <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
+  //                   <h5 style="margin:0;" class="fa fa-trash button transition btn-icon idSPLIT${data[i]['id']}SPLIT" aria-hidden="true"></h5>
+  //               </nav>
+  //           </li>`
+  //     subscribedList['langIds'].push(data[i]['idLang']);
+  //     subscribedList['itemIds'].push(data[i]['id']);
+  //     $('.list-group.subscribed-list').append(newItem);
+  //   }
+  //   for (let key in langCodes) {
+  //     if (!subscribedList['langIds'].includes(key)) {
+  //       const newItem = `<li class="list-group-item">
+  //               <table class=" trash transition" style="color: white;position:relative; z-index:5;">
+  //                   <tr>
+  //                       <th class="button check btn-icon" style="padding:20px 25px;width:100%;text-align:center; z-index:5;">
+  //                           <h5 class="class-title checked"style="margin:0;">${langCodes[key]}</h5>
+  //                           <p class="description transition checked" ></p>
+  //                       </th>
+  //                   </tr>
+  //               </table>
+  //               <nav class="navbar" style="position:absolute; z-index:0; right:0; height:100%; top:0%; width:130px; background:rgba(0,0,0, 0.1);">
+  //                   <h5 style="margin:0;" class="fa fa-check button transition btn-icon langIdSPLIT${key}">SPLIT" aria-hidden="true"></h5>
+  //               </nav>
+  //           </li>`
+  //       $('.list-group.class-list').append(newItem);
+  //     }
+  //   }
+  //   $('.list-group-item').hover(function (e) {
+  //     $('.trash').removeClass("selected");
+  //     $('.description').removeClass("selected");
+  //     $(this).find('.trash').addClass("selected");
+  //     if ($(this).find('.description').text().length > 0) {
+  //       $(this).find('.description').addClass("selected");
+  //     }
+  //   });
+  //   $('.list-group-item').mouseleave(function (e) {
+  //     $('.trash').removeClass("selected");
+  //     $('.description').removeClass("selected");
+  //   });
+  //   $('.button').click(function (e) {
+  //     e.stopPropagation();
+  //     const id = $(this).attr('class').split('SPLIT')[1];
+  //     if ($(this).attr('class').includes('fa-trash')) {
+  //       deleteClass(id, () => {
+  //         showListPage();
+  //       });
+  //     }
+  //     else if ($(this).attr('class').includes('check')) {
+  //       if (!subscribedList['itemIds'].includes(id)) {
+  //         addClass(id, function (e) {
+  //           showListPage();
+  //         })
+  //       }
+  //     }
+  //   });
+  // })
   hideAll();
   $('#ListPage').show();
 }
 
+
+function showUserPage() {
+  $('#name').val(null);
+  $('#emailR').val(null);
+  $('#passwordR').val(null);
+  $('#password').val(null);
+  $('#email').val(null);
+  hideAll();
+  $('#UserPage').show();
+}
 
 function hideAll() {
   $('#ListPage').hide();
@@ -453,6 +549,12 @@ function voice(message = null) {
     data: data
   })
     .then(result => {
+      if (('#UserPage:visible').length > 0) {
+        $('#loginBtn').html('Login');
+        showListPage();
+        $('#registerBtn').html('Register');
+        showListPage();
+      }
       play(result)
     })
     .fail(fail => {
@@ -461,7 +563,7 @@ function voice(message = null) {
 
 // google
 function onSignIn(googleUser) {
-  let id_token = googleUser.getAuthResponse().id_token;
+  id_token = googleUser.getAuthResponse().id_token;
   $.ajax({
     url: 'http://localhost:3000/user/google-login',
     method: 'POST',
@@ -470,7 +572,7 @@ function onSignIn(googleUser) {
     }
   })
     .done(user => {
-      localStorage.setItem('access_token', user.accessToken);
+      localStorage.setItem('accessToken', user.accessToken);
       // console.log(result, 'result nih')
       // token = localStorage.accessToken;
       localStorage.setItem('name', user.name);
@@ -492,7 +594,7 @@ function signOut() {
   });
   const name = localStorage.getItem('name');
   voice(`Goodbye ${name}, thanks for using our site!`);
-  localStorage.removeItem('access_token');
+  localStorage.removeItem('accessToken');
   localStorage.removeItem('name');
 }
 

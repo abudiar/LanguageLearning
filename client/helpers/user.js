@@ -30,10 +30,10 @@ function login(data) {
 
 function logout() {
     localStorage.removeItem('accessToken');
-    $('#loginEmail').val('');
-    $('#loginPassword').val('');
-    $('#registerName').val('');
-    $('#registerEmail').val('');
-    $('#registerPassword').val('');
+    $('#email').val('');
+    $('#password').val('');
+    $('#name').val('');
+    $('#emailR').val('');
+    $('#passwordR').val('');
     $('#UserPage').show();
 }
