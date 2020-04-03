@@ -1,8 +1,8 @@
-const {Class} = require('../models')
+const {User, Class} = require('../models')
 
 class ClassController {
   static getAll(req, res, next) {
-      console.log('masuk todos ga sih')
+      console.log('masuk ga sih')
       const UserId = req.user.id;
       Class.findAll({where: {UserId}})
         .then((lang) => {
@@ -15,8 +15,11 @@ class ClassController {
   }
 
   static create(req, res, next) {
+    console.log(req.body, 'body')
+    console.log(req.user, 'user')
     const {idLang} = req.body;
     const UserId = req.user.id;
+    console.log(UserId, 'ID NIH')
     User.findOne({where: {id: UserId}})
       .then(user => {
         if (!user) {
@@ -42,7 +45,7 @@ class ClassController {
     Class.findOne({where: {id: req.params.id, UserId}})
       .then((lang) => {
         if(lang) {
-          res.status(200).json(todo);
+          res.status(200).json(lang);
         } else {
           throw new Error('Class not found');
         }
@@ -55,13 +58,13 @@ class ClassController {
   static deleteClass(req, res, next) {
     let deletedClass;
     const UserId = req.user.id;
-    Todo.findOne({where: {id: req.params.id, UserId}})
+    Class.findOne({where: {id: req.params.id, UserId}})
       .then(lang => {
         if (lang) {
           deletedClass = lang;
           return Class.destroy({where: {id: req.params.id}, returning: true});
         } else {
-          throw new Error('Todo not found');
+          throw new Error('Class not found');
         }
       })
       .then(lang => {

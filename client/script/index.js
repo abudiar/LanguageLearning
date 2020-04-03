@@ -27,8 +27,8 @@ $( document ).ready(function() {
     const password = $('#password').val();
     ajaxFunction('POST', 'user/login', {email, password})
     .done(user => {
-      let {access_token} = user;
-      localStorage.setItem('access_token', access_token);
+      let {accessToken} = user;
+      localStorage.setItem('access_token', accessToken);
       localStorage.setItem('name', user.name);
       voice(`Welcome, ${user.name}... Enjoy using our site`);
     })
