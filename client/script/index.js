@@ -57,7 +57,7 @@ $(document).ready(function () {
     e.stopPropagation();
   })
 
-  $('.logout').click(function () {
+  $('.fa-sign-out').click(function () {
     logout();
   })
 
