@@ -14,5 +14,8 @@ app.use(express.static('public'));
 // routers
 app.use('/', router)
 
+// errorHandling
+app.use(require('./middlewares').errorHandler)
+
 // start
 app.listen(PORT, () => { console.log(`Server start on port: ${PORT}`); });
