@@ -1,38 +1,55 @@
 let googleUser = {};
 $(document).ready(function (e) {
 
-    let lastType = performance.now();
-    let lastVal = '';
-    let curVal = '';
 
-    $('#translateTitle').on('input', function () {
-        updateTranslation()
-        lastType = performance.now();
-    })
+    // $.ajax({
+    //     method: 'GET',
+    //     url: `http://localhost:3000/nama.wav`,
+    //     // headers: {
+    //     //     accessToken: localStorage.getItem('accessToken')
+    //     // },
+    //     // data
+    // })
+    //     .done(function (response) {
+    //         // console.log(response)
+    //         // const toBase64 = file => new Promise((resolve, reject) => {
+    //         //     const reader = new FileReader();
+    //         //     reader.readAsDataURL(file);
+    //         //     reader.onload = () => resolve(reader.result);
+    //         //     reader.onerror = error => reject(error);
+    //         // });
+    //         // toBase64(response)
+    //         //     .then(result => console.log(result));
+    //         $('#audio').html(`<source src=${response} type="audio/wav"`);
+    //     })
+    //     .fail(function (response) {
+    //         console.log(response);
+    //     })
 
-    $.ajax({
-        method: 'GET',
-        url: `http://localhost:3000/nama.wav`,
-        // headers: {
-        //     accessToken: localStorage.getItem('accessToken')
-        // },
-        // data
-    })
-        .done(function (response) {
-            // console.log(response)
-            // const toBase64 = file => new Promise((resolve, reject) => {
-            //     const reader = new FileReader();
-            //     reader.readAsDataURL(file);
-            //     reader.onload = () => resolve(reader.result);
-            //     reader.onerror = error => reject(error);
-            // });
-            // toBase64(response)
-            //     .then(result => console.log(result));
-            $('#audio').html(`<source src=${response} type="audio/wav"`);
-        })
-        .fail(function (response) {
-            console.log(response);
-        })
+
+    // $('#voice').submit(function (e) {
+    //     e.preventDefault();
+    //     const data = {
+    //         text: $('#text').val(),
+    //         voice: $('#lang').val()
+    //     }
+
+    //     console.log(data)
+
+    //     $.ajax({
+    //         url: `http://localhost:3000/voices?voice=${data.voice}&text=${data.text}`,
+    //         method: 'POST',
+    //         data: data
+    //     })
+    //         .then(result => {
+    //             console.log(result);
+    //             console.log('masuk ga sih');
+    //             $('#audio').html(`<source src="nama3.wav" type="audio/wav">`);
+    //         })
+    //         .fail(fail => {
+    //             console.log(fail);
+    //         })
+    // })
 
     // $.ajax({
     //     method: 'GET',
@@ -49,98 +66,66 @@ $(document).ready(function (e) {
     //         console.log(response);
     //     })
 
-    setInterval(updateTranslation, 500)
 
-    function updateTranslation() {
-        curVal = $('#translateTitle').val();
-        const curValArr = curVal.split(' ');
-        if ((lastType + 500 < performance.now() ||
-            curValArr[curValArr.length - 1] == '') && lastVal != curVal) {
-            translate({ text: curVal }, (resp) => {
-                if (resp.translated.text.includes('NO QUERY SPECIFIED.'))
-                    $('#translatedTitle').html('Start typing to learn');
-                else if (resp.translated.text.includes('QUERY LIMIT EXCEEDED.'))
-                    $('#translatedTitle').html('Maximum of 500 chars!');
-                else
-                    $('#translatedTitle').html(resp.translated.text);
-            })
-            lastVal = curVal;
-        }
-    }
 
-    function translate(data, cb) {
-        console.log(data)
-        $.ajax({
-            method: 'GET',
-            url: `http://localhost:3000/translate`,
-            // headers: {
-            //     accessToken: localStorage.getItem('accessToken')
-            // },
-            data
-        })
-            .done(function (response) {
-                cb(response);
-            })
-            .fail(function (response) {
-                console.log(response);
-            })
-    }
+    // (function () {
+    //     var measurer = $('<span>', {
+    //         style: "display:inline-block;word-break:break-word;visibility:none;white-space:pre-wrap;"
+    //     })
+    //         .appendTo('body');
+    //     function initMeasurerFor(textarea) {
+    //         if (!textarea[0].originalOverflowY) {
+    //             textarea[0].originalOverflowY = textarea.css("overflow-y");
+    //         }
+    //         var maxWidth = textarea.css("max-width");
+    //         measurer.text(textarea.text())
+    //             .css("max-width", maxWidth == "none" ? textarea.width() + "px" : maxWidth)
+    //             .css('font', textarea.css('font'))
+    //             .css('overflow-y', textarea.css('overflow-y'))
+    //             .css("max-height", textarea.css("max-height"))
+    //             .css("min-height", textarea.css("min-height"))
+    //             .css("min-width", textarea.css("min-width"))
+    //             .css("padding", textarea.css("padding"))
+    //             .css("border", textarea.css("border"))
+    //             .css("box-sizing", textarea.css("box-sizing"))
+    //     }
+    //     function updateTextAreaSize(textarea) {
+    //         textarea.height(measurer.height());
+    //         var w = measurer.width();
+    //         if (textarea[0].originalOverflowY == "auto") {
+    //             var mw = textarea.css("max-width");
+    //             if (mw != "none") {
+    //                 if (w == parseInt(mw)) {
+    //                     textarea.css("overflow-y", "auto");
+    //                 } else {
+    //                     textarea.css("overflow-y", "hidden");
+    //                 }
+    //             }
+    //         }
+    //         textarea.width(w + 2);
+    //     }
+    //     $('textarea.autofit').on({
+    //         input: function () {
+    //             var text = $(this).val();
+    //             if ($(this).attr("preventEnter") == undefined) {
+    //                 text = text.replace(/[\n]/g, "<br>&#8203;");
+    //             }
+    //             measurer.html(text);
+    //             updateTextAreaSize($(this));
+    //         },
+    //         focus: function () {
+    //             initMeasurerFor($(this));
+    //         },
+    //         keypress: function (e) {
+    //             if (e.which == 13 && $(this).attr("preventEnter") != undefined) {
+    //                 e.preventDefault();
+    //             }
+    //         }
+    //     });
+    // })();
 
-    (function () {
-        var measurer = $('<span>', {
-            style: "display:inline-block;word-break:break-word;visibility:hidden;white-space:pre-wrap;"
-        })
-            .appendTo('body');
-        function initMeasurerFor(textarea) {
-            if (!textarea[0].originalOverflowY) {
-                textarea[0].originalOverflowY = textarea.css("overflow-y");
-            }
-            var maxWidth = textarea.css("max-width");
-            measurer.text(textarea.text())
-                .css("max-width", maxWidth == "none" ? textarea.width() + "px" : maxWidth)
-                .css('font', textarea.css('font'))
-                .css('overflow-y', textarea.css('overflow-y'))
-                .css("max-height", textarea.css("max-height"))
-                .css("min-height", textarea.css("min-height"))
-                .css("min-width", textarea.css("min-width"))
-                .css("padding", textarea.css("padding"))
-                .css("border", textarea.css("border"))
-                .css("box-sizing", textarea.css("box-sizing"))
-        }
-        function updateTextAreaSize(textarea) {
-            textarea.height(measurer.height());
-            var w = measurer.width();
-            if (textarea[0].originalOverflowY == "auto") {
-                var mw = textarea.css("max-width");
-                if (mw != "none") {
-                    if (w == parseInt(mw)) {
-                        textarea.css("overflow-y", "auto");
-                    } else {
-                        textarea.css("overflow-y", "hidden");
-                    }
-                }
-            }
-            textarea.width(w + 2);
-        }
-        $('textarea.autofit').on({
-            input: function () {
-                var text = $(this).val();
-                if ($(this).attr("preventEnter") == undefined) {
-                    text = text.replace(/[\n]/g, "<br>&#8203;");
-                }
-                measurer.html(text);
-                updateTextAreaSize($(this));
-            },
-            focus: function () {
-                initMeasurerFor($(this));
-            },
-            keypress: function (e) {
-                if (e.which == 13 && $(this).attr("preventEnter") != undefined) {
-                    e.preventDefault();
-                }
-            }
-        });
-    })();
+
+
 
 
 

@@ -18,6 +18,7 @@ class Translate {
         const translateParams = {
             q: text,
             langpair: `${translateFrom}|${translateTo}`,
+            de: 'alanwbud@gmail.com'
         }
         const stringified = queryString.stringify(translateParams);
 

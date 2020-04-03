@@ -5,9 +5,9 @@ const fs = require('fs');
 
 const textToSpeech = new TextToSpeechV1({
     authenticator: new IamAuthenticator({
-        apikey: '-kckrdl8T7TFiHDzcXxe7zx1J5iS31Z08cEPx_oKgaC5',
+        apikey: 'god133D4NoOSOPuVuCspGqKaSVqNCk8_BoIteesPoYEh',
     }),
-    url: 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/f8a5f28e-e529-41d9-bd32-7ff3509c5043',
+    url: 'https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/1bcc4613-3f80-483a-9d33-0bf6843eeef2',
 });
 
 const getVoiceParams = {
@@ -29,34 +29,40 @@ class VoiceController {
         console.log(req.data, 'dari client')
         console.log(req.body, 'dari client')
         const { voice, text } = req.query
+            , lang = '';
         // axios({
-        //   method: 'post',
-        //   url: 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/f8a5f28e-e529-41d9-bd32-7ff3509c5043/v1/synthesize?voice=' + lang,
-        //   headers: {
-        //     accept: 'audio/wav',
-        //     'content-type': 'application/json',
-        //     authorization: 'Basic YXBpa2V5Oi1rY2tyZGw4VDdURmlIRHpjWHhlN3p4MUo1aVMzMVowOGNFUHhfb0tnYUM1'
-        //   },
-        //   data: {
-        //     text
-        //   }
-        //   // responseType: 'blob'
+        //     method: 'post',
+        //     url: 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/f8a5f28e-e529-41d9-bd32-7ff3509c5043/v1/synthesize?voice=' + voice,
+        //     headers: {
+        //         accept: 'audio/wav',
+        //         'content-type': 'application/json',
+        //         authorization: 'Basic YXBpa2V5Oi1rY2tyZGw4VDdURmlIRHpjWHhlN3p4MUo1aVMzMVowOGNFUHhfb0tnYUM1'
+        //     },
+        //     data: {
+        //         text
+        //     }
+        //     // responseType: 'blob'
         // })
-        //   .then(audio => {
-        //     // console.log(typeof audio.data)
-        //     // res.status(200).json({data: audio.data})
-        //     // audio.pause();
-        //     // audio.src = URL.createObjectURL(response.data);
-        //     // audio.play();
-        //     res.send(audio.data)
-        //     // res.send(`<audio controls>
-        //     //   <source src="${audio.data}" type="audio/wav"></audio>
-        //     // `)
-        //   })
-        //   .catch(err => {
-        //     res.status(500).send(err.message)
-        //     // console.log(err, 'error')
-        //   })
+        //     .then(audio => {
+        //         // console.log(typeof audio.data)
+        //         // res.status(200).json({data: audio.data})
+        //         // audio.pause();
+        //         // audio.src = URL.createObjectURL(response.data);
+        //         // audio.play();
+        //         res.writeHead(200, {
+        //             'Content-Type': 'audio/wav',
+        //             'Content-disposition': 'attachment;filename=' + 'filename',
+        //             'Content-Length': audio.data.length
+        //         });
+        //         res.end(Buffer.from(audio.data, 'audio/wav'))
+        //         // res.send(`<audio controls>
+        //         //   <source src="${audio.data}" type="audio/wav"></audio>
+        //         // `)
+        //     })
+        //     .catch(err => {
+        //         res.status(500).send(err.message)
+        //         console.log(err, 'error')
+        //     })
 
         // const synthesizeParams = { text: 'This is test from server yo', accept: 'audio/wav', voice: 'en-US_AllisonVoice', };
 
@@ -87,11 +93,21 @@ class VoiceController {
             voice,
             accept: 'audio/wav',
         }
+        function randomString(length, chars) {
+            var result = '';
+            for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+            return result;
+        }
 
         textToSpeech.synthesize(synthesizeParams)
             .then(audio => {
-                audio.result.pipe(fs.createWriteStream('../client/nama3.wav'));
-                res.status(200).send('nama')
+                const audioFile = `${randomString(6, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')}.wav`;
+                let tempFile = fs.createWriteStream(`./public/audio/${audioFile}`);
+                audio.result.pipe(tempFile);
+                tempFile.on('finish', function (fd) {
+                    console.log(audioFile)
+                    res.status(200).send(audioFile);
+                });
             })
             .catch(err => {
                 console.log('error:', err);

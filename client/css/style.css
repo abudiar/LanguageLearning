@@ -8,12 +8,6 @@ body {
   background: rgb(213, 213, 221);
 }
 
-.transition {
-  transition: 0.4s ease all;
-  /* transition-timing-function: ease-in-out; */
-  /* transition: opacity 0.3s, visibility 0.3s; */
-}
-
 .hidden {
   opacity: 0;
   visibility: hidden;
@@ -178,20 +172,6 @@ ul li {
   background: #6c757d;
 }
 
-.card {
-  margin: auto;
-  width: 100%;
-  max-width: 800px;
-  min-width: 530px;
-  min-height: 100%;
-  color: whitesmoke;
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
-  padding: 0px;
-  overflow: hidden;
-  border-radius: 10px;
-  border: 0;
-}
-
 .container-switch {
   padding-top: 60px;
   width: 100%;
@@ -202,11 +182,7 @@ ul li {
 .switch-back {
   opacity: 20%;
   background: #7f7fd5;
-  background: linear-gradient(
-    49deg,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
-  );
+  background: linear-gradient( 49deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
 .switch-button {
@@ -332,7 +308,7 @@ input[type="checkbox"]:checked::before {
   opacity: 1;
 }
 
-input[type="checkbox"]:checked ~ .todo-title::before {
+input[type="checkbox"]:checked~.todo-title::before {
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
@@ -377,15 +353,18 @@ input[type="checkbox"]:checked ~ .todo-title::before {
 
 */
 
+.transition {
+  transition: 0.4s ease all;
+  /* transition: max-height 0.4s ease all; */
+  /* transition-timing-function: ease-in-out; */
+  /* transition: opacity 0.3s, visibility 0.3s; */
+}
+
 .navbar {
   padding: 12px 30px;
   border: 0;
   background: rgb(238, 174, 202);
-  background: linear-gradient(
-    49deg,
-    rgb(236, 174, 238) 0%,
-    rgb(148, 216, 233) 100%
-  );
+  background: linear-gradient( 49deg, rgb(236, 174, 238) 0%, rgb(148, 216, 233) 100%);
 }
 
 textarea {
@@ -405,16 +384,156 @@ textarea {
   border: 0px solid;
   background: transparent;
 }
+
 textarea:focus {
-  border-radius: 10px;
   outline: none;
 }
 
-.textarea {
+.simple-button {
   padding: 8px;
+  background: white;
+  border: 1px solid #e8e8e8;
   border-radius: 10px;
 }
 
 .inner-shadow {
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  /* box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.2); */
+  /* border: 1px solid rgb(242, 242, 242); */
+}
+
+.card {
+  margin: auto;
+  width: 100%;
+  min-height: 100%;
+  color: white;
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+  padding: 0px;
+  overflow: hidden;
+  border-radius: 30px;
+  border: 0;
+  max-width: 650px;
+  min-width: 500px;
+}
+
+.card-body {
+  padding: 50px;
+}
+
+#pageSettings {
+  position: absolute;
+  background: #f8f9fa;
+  max-height: 100%;
+  width: 100%;
+  bottom: 0;
+  border-radius: 30px;
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+}
+
+#SpeakerForm {}
+
+.half {
+  width: 49%;
+}
+
+.full {
+  width: 100%;
+}
+
+#pageSettings.close {
+  max-height: 0;
+}
+
+/*Styling Selectbox*/
+
+.dropdown {
+  /* width: 49%; */
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 2px rgb(204, 204, 204);
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: 100%;
+  text-align: left
+}
+
+.dropdown .select {
+  cursor: pointer;
+  display: block;
+  padding: 10px
+}
+
+.dropdown .select>i {
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  float: right;
+  line-height: 20px
+}
+
+.dropdown:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+
+.dropdown:active {
+  background-color: #f8f8f8
+}
+
+.dropdown.active:hover, .dropdown.active {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+  border-radius: 5px 5px 0 0;
+  background-color: #f8f8f8
+}
+
+.dropdown.active .select>i {
+  transform: rotate(-90deg)
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  margin-top: 1px;
+  box-shadow: 0 1px 2px rgb(204, 204, 204);
+  border-radius: 0 1px 5px 5px;
+  overflow: hidden;
+  display: none;
+  max-height: 144px;
+  overflow-y: auto;
+  z-index: 9
+}
+
+.dropdown .dropdown-menu li {
+  padding: 10px;
+  transition: all .2s ease-in-out;
+  cursor: pointer
+}
+
+.dropdown .dropdown-menu {
+  padding: 0;
+  list-style: none
+}
+
+.dropdown .dropdown-menu li:hover {
+  background-color: #f2f2f2
+}
+
+.dropdown .dropdown-menu li:active {
+  background-color: #e2e2e2
+}
+
+.dropdown:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    /* background-color: lightblue; */
+    padding: 10px;
+  }
 }

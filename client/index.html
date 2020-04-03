@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=520, initial-scale=1.0" />
 
     <!-- StyleSheets -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -179,23 +179,80 @@
         </div>
         <!-- LanguangePage -->
         <div id="LanguangePage">
-            <nav class="navbar navbar-dark justify-content-between">
-                <h5 class="back transition btn-icon"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</h5>
+            <!-- PageSettings -->
+            <div id="pageSettings" class="transition">
+                <h5 style="width: 100%; color: black;">Learning Settings</h5>
+                <br>
+                <form id="LearningSForm" class="justify-content-between">
+                    <h6 style="width: 100%; text-align: left; padding-left:10px; color: black;">Speaker</h6>
+                    <div class="full justify-content-between">
+                        <div class="dropdown half">
+                            <div class="select">
+                                <span>Select Language</span>
+                                <i class="fa fa-chevron-left"></i>
+                            </div>
+                            <input type="hidden" name="langId" id="langId">
+                            <ul id="langIdMenu" class="dropdown-menu">
+                            </ul>
+                        </div>
+                        <div class="dropdown half">
+                            <div class="select">
+                                <span>Select Language First!</span>
+                                <i class="fa fa-chevron-left"></i>
+                            </div>
+                            <input type="hidden" name="speaker">
+                            <ul id="speakerMenu" class="dropdown-menu">
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+
+                    <h6 style="width: 100%; text-align: left; padding-left:10px; color: black;">
+                        Origin Language
+                    </h6>
+                    <div class="dropdown full">
+                        <div class="select">
+                            <span>Select Language</span>
+                            <i class="fa fa-chevron-left"></i>
+                        </div>
+                        <input type="hidden" name="originLang">
+                        <ul id="originLangMenu" class="dropdown-menu">
+                            <!-- <li id="male">Male</li> -->
+                        </ul>
+                    </div>
+                    <button class="simple-button btn btn-lg text-uppercase full btn-icon mt-5 mb-5 p-3 inner-shadow">
+                        Save
+                    </button>
+                </form>
+            </div>
+            <!-- Learn -->
+            <nav class="navbar navbar-dark justify-content-between text-center">
+                <h3 class="back transition btn-icon"><i class="fa fa-arrow-left" aria-hidden="true"></i></h3>
                 <div>
                     <h1>Learn</h1>
-                    <h5>English</h5>
+                    <h5 id="languageName">English</h5>
                 </div>
-                <h5 style="color:transparent;cursor:default;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                </h5>
+                <h3 id="pageSettingsBtn" class="back transition btn-icon"><i class="fa fa-cog" aria-hidden="true"></i>
+                </h3>
             </nav>
             <div class="card-body translate-todo transition visible">
-                <p id="translatedTitle" style="color:black;">Start typing to learn</p>
-                <div class="textarea inner-shadow">
-                    <textarea type="text" id="translateTitle" class="autofit" style="overflow-y: hidden;"></textarea>
+                <h5 id="translatedText" style="color:black;">Start typing to learn</h5>
+                <br>
+                <div class="simple-button inner-shadow">
+                    <textarea type="text" spellcheck="false" id="translateText" class="autofit"
+                        style="overflow-y: hidden;"></textarea>
                 </div>
             </div>
-            <audio controls id="audio">
-                <source src="http://localhost:3000/nama.wav" type="audio/wav" </audio>
+            <form id="voice" style="padding: 0 50px">
+                <!-- <div>
+                    <audio controls id="audio">
+                    </audio>
+                </div> -->
+                <button id="play" class="simple-button btn btn-lg text-uppercase full btn-icon  p-3 inner-shadow">
+                    Play
+                </button>
+            </form>
         </div>
         <!-- AlreadySocialsPage -->
         <div id="AlreadySocialsPage" style="display: none">
@@ -221,8 +278,9 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
         integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
-    <script src="helpers/langcodes.js"></script>
+    <script src="helpers/consts.js"></script>
     <script src="js/main.js"></script>
+    <script src="script/index.js"></script>
 
 </body>
 
