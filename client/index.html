@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com">
   <title>Document</title>
   <!-- jquery -->
   <script
@@ -11,7 +12,6 @@
   crossorigin="anonymous"></script>
   <!-- google api -->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <meta name="google-signin-client_id" content="598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com">
 
 </head>
 <body>
@@ -28,6 +28,26 @@
   <!-- sound -->
   <div class="main-tts">
   </div>
+
+  <!-- function login -->
+  <form id="login">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <button type="submit">Login</button>
+  </form>
+
+  <!-- function register -->
+  <form id="register">
+    <label for="name">Full Name</label>
+    <input type="text" name="name" id="name">
+    <label for="emailR">Email</label>
+    <input type="email" name="emailR" id="emailR">
+    <label for="passwordR">Password</label>
+    <input type="password" name="password" id="passwordR">
+    <button type="submit">Register</button>
+  </form>
 
   <!-- user form -->
   <script src="./script/index.js"></script>

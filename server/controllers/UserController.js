@@ -2,7 +2,8 @@ const { User } = require('../models')
 const jwt = require('jsonwebtoken')
 const { compare } = require('../helper/bcrypt')
 const { OAuth2Client } = require('google-auth-library')
-const client = new OAuth2Client('598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com')
+const client_id = require('../config/config.json').google.client_id
+const client = new OAuth2Client(client_id)
 const { login, register } = require('../helper/sendEmail')
 
 class UserController {
@@ -26,20 +27,21 @@ class UserController {
             .then(user => {
                 const accessToken = jwt.sign({
                     id: user.id,
-                    email: user.email
                 }, 'secret')
-                res.status(201).json({ accessToken })
+                res.status(201).json({ accessToken, name: user.full_name })
             })
             .catch(err => {
-                res.status(500).json(err)
+                res.status(500).json(err.message)
             })
     }
 
     static login(req, res) {
         const { email, password } = req.body
+        console.log(req.body)
         let option = { where: { email } }
         User.findOne(option)
             .then(data => {
+                console.log('masuk user find')
                 if (!data) {
                     res.status(400).json({
                         message: 'email tidak terdaftar'
@@ -54,9 +56,8 @@ class UserController {
                         login(email)
                         const accessToken = jwt.sign({
                             id: data.id,
-                            email: data.email
                         }, 'secret')
-                        res.status(201).json({ accessToken })
+                        res.status(201).json({ accessToken, name: data.full_name })
                     }
                 }
             })
@@ -66,15 +67,16 @@ class UserController {
     }
 
     static googleLogin(req, res) {
-        let user = {}
-        const token = req.body.token
-        console.log('masuk');
+        let user = {}, existuser
+        const token = req.body.id_token
+        console.log(req.body, 'masuk');
         client.verifyIdToken({
             idToken: token,
-            audience: '598465550580-euke67e8kff737p7rjqa63hf1mk7blsg.apps.googleusercontent.com'
+            audience: client_id
         })
             .then(googleData => {
                 console.log(googleData);
+                existuser = googleData.payload
                 const payload = googleData.getPayload()
                 // console.log(payload);
                 user.email = payload.email
@@ -85,8 +87,11 @@ class UserController {
             })
             .then(userData => {
                 if (userData) {
-                    login(user.email)
-                    return userData
+                    if(userData.full_name === existuser.name) {
+                        return userData
+                    } else {
+                        throw new Error('Email address already taken')
+                    }
                 } else {
                     // console.log(userData);
                     register(user.email)
@@ -94,14 +99,15 @@ class UserController {
                 }
             })
             .then(user => {
+                console.log(user, 'user founded')
                 const accessToken = jwt.sign({
-                    id: user.id,
-                    email: user.email
+                    id: user.id
                 }, 'secret')
-                res.status(201).json({ accessToken })
+                res.status(201).json({ accessToken, name: user.full_name })
             })
             .catch(err => {
-                res.status(500).json(err)
+                console.log(err)
+                res.status(500).json(err.message)
             })
     }
 
